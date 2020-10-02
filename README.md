@@ -1,3 +1,3 @@
-# Rick-And-Marty
+# Rick-And-Morty
 
-Rick and Marty Characters List REST API Demo (with local data caching)
+Rick and Morty Characters List REST API Demo (with local data caching)
