@@ -11,7 +11,7 @@ import UIKit
 
 class NetworkService {
 
-    // получение данных с сервера или из кэша (при наличии)
+    /// Получение данных с сервера или из кэша (при наличии)
     public func networkRequest(urlString: String, completion: @escaping (Result<Data, Error>) -> Void) {
         
         guard let url = URL(string: urlString) else {return}
@@ -29,7 +29,7 @@ class NetworkService {
         }
     }
     
-    // создание задачи для URLSession
+    /// Создание задачи для URLSession
     private func createDataTask(with request: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) -> URLSessionDataTask {
         
         URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
@@ -49,7 +49,7 @@ class NetworkService {
         })
     }
     
-    // сохранение данных в кэш
+    /// Сохранение данных в кэш
     private func saveDataToCache(_ data: Data, request: URLRequest, response: URLResponse?) {
         if let response = response, ((response as? HTTPURLResponse)?.statusCode ?? 500) < 300 {
             let cachedData = CachedURLResponse(response: response, data: data)

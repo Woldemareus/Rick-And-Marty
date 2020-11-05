@@ -12,7 +12,7 @@ class NetworkFetcher {
     
     private let networkService = NetworkService()
     
-    // парсим в модель
+    /// Парсим в модель
     private func decodeData<T:Decodable>(_ data: Data, toModelType: T.Type) -> T? {
         
         let decoder = JSONDecoder()
@@ -25,7 +25,7 @@ class NetworkFetcher {
         }
     }
     
-    // достаем объект модели по URL
+    /// Достаем объект модели по URL
     public func fetchModelObject<T:Decodable>(urlString: String, completion: @escaping (Result<T?, Error>) -> Void) {
         
         networkService.networkRequest(urlString: urlString) { (result) in
@@ -39,7 +39,7 @@ class NetworkFetcher {
         }
     }
     
-    // достаем рисунок по URL
+    /// Достаем рисунок по URL
     public func fetchImage(urlString: String, completion: @escaping (Result<UIImage?, Error>) -> Void) {
         
         networkService.networkRequest(urlString: urlString) { (result) in

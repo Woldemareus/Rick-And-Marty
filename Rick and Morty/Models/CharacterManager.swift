@@ -21,7 +21,7 @@ class CharacterManager {
     
     var isFetchingData = false
     
-    // достаем персонажей
+    /// Достаем персонажей
     public func fetchCharacters(completion: @escaping (Error?) -> Void) {
         
         isFetchingData = true
@@ -55,7 +55,7 @@ class CharacterManager {
         })
     }
     
-    // достаем иконки для полученных ранее персонажей
+    /// Достаем иконки для полученных ранее персонажей
     public func fetchCharacterImages(newCharacters: [Character], oldCharacters: [Character], completion: @escaping (Error?) -> Void) {
         
         newCharacters.enumerated().forEach { (index, character) in

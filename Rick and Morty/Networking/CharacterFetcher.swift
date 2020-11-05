@@ -13,7 +13,7 @@ class CharacterFetcher {
     let networkFetcher = NetworkFetcher()    
     
     
-    // получаем персонажей по запросу к API
+    /// Получаем персонажей по запросу к API
     public func fetchCharacters(page: Int, completion: @escaping (Result<CharactersRequest?, Error>) -> Void) {
         
         let urlString = "https://rickandmortyapi.com/api/character/?page=\(page)"
@@ -21,7 +21,7 @@ class CharacterFetcher {
     }
     
     
-    // получаем аватарку персонажа по URL
+    /// Получаем аватарку персонажа по URL
     public func fetchCharacterImage(urlString: String, completion: @escaping ((Result<UIImage?,Error>) -> Void)) {
         
         networkFetcher.fetchImage(urlString: urlString, completion: completion)
