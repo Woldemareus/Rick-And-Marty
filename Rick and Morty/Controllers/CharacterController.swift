@@ -11,14 +11,30 @@ import UIKit
 class CharacterController: UIViewController{
     
     @IBOutlet weak var tableView: UITableView!
-    let characterManager = CharacterManager()
+    let characterManager: ICharacterManager
         
     var timer: Timer?
+    
+    // MARK: - Initialization
+    
+    public init() {
+        self.characterManager = CharacterManager()
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        self.characterManager = CharacterManager()
+        super.init(coder: coder)
+    }
+    
+    // MARK: - LifeCycle
     
     override func viewDidLoad() {
         super.viewDidLoad()
         initialControllerSetup()
     }
+    
+    // MARK: - Private methods
     
     private func initialControllerSetup() {
         title = "Rick and Morty"
@@ -33,7 +49,9 @@ class CharacterController: UIViewController{
     }
     
     private func fetchCharacters() {
-        characterManager.fetchCharacters() { error in
+        characterManager.fetchCharacters() { [weak self] error in
+            guard let self = self else {return}
+            
             self.tableView.tableFooterView = nil
             if error == nil {
                 self.tableView.reloadData()

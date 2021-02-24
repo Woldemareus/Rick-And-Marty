@@ -9,15 +9,23 @@
 
 import UIKit
 
-class NetworkService {
+public protocol INetworkService {
+    func networkRequest(urlString: String, completion: @escaping (Result<Data, Error>) -> Void)
+}
 
+class NetworkService: INetworkService {
+
+    // MARK: - Public methods
+    
     /// Получение данных с сервера или из кэша (при наличии)
     public func networkRequest(urlString: String, completion: @escaping (Result<Data, Error>) -> Void) {
         
         guard let url = URL(string: urlString) else {return}
         let request = URLRequest(url: url)
         
-        DispatchQueue.global(qos: .userInitiated).async {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else {return}
+            
             if let data = URLCache.shared.cachedResponse(for: request)?.data {
                 DispatchQueue.main.async {
                     completion(.success(data))
@@ -29,10 +37,13 @@ class NetworkService {
         }
     }
     
+    // MARK: - Private methods
+    
     /// Создание задачи для URLSession
     private func createDataTask(with request: URLRequest, completion: @escaping (Result<Data, Error>) -> Void) -> URLSessionDataTask {
         
-        URLSession.shared.dataTask(with: request, completionHandler: { (data, response, error) in
+        URLSession.shared.dataTask(with: request, completionHandler: { [weak self] (data, response, error) in
+            guard let self = self else {return}
             
             if let error = error as? URLError {
                 print("error occured while retrieving data from Internet:", error)

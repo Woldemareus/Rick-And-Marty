@@ -8,10 +8,22 @@
 
 import UIKit
 
-class CharacterFetcher {
+public protocol ICharacterFetcher {
+    func fetchCharacters(page: Int, completion: @escaping (Result<CharactersRequest?, Error>) -> Void)
+    func fetchCharacterImage(urlString: String, completion: @escaping ((Result<UIImage?,Error>) -> Void))
+}
+
+public class CharacterFetcher: ICharacterFetcher {
     
-    let networkFetcher = NetworkFetcher()    
+    let networkFetcher: INetworkFetcher
     
+    // MARK: - Initialization
+    
+    public init() {
+        self.networkFetcher = NetworkFetcher()
+    }
+    
+    // MARK: - Public methods
     
     /// Получаем персонажей по запросу к API
     public func fetchCharacters(page: Int, completion: @escaping (Result<CharactersRequest?, Error>) -> Void) {
@@ -19,7 +31,6 @@ class CharacterFetcher {
         let urlString = "https://rickandmortyapi.com/api/character/?page=\(page)"
         networkFetcher.fetchModelObject(urlString: urlString, completion: completion)
     }
-    
     
     /// Получаем аватарку персонажа по URL
     public func fetchCharacterImage(urlString: String, completion: @escaping ((Result<UIImage?,Error>) -> Void)) {

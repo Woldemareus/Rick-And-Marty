@@ -8,16 +8,18 @@
 
 import Foundation
 
-struct CharactersRequest: Decodable {
+public struct CharactersRequest: Decodable {
     var results: [Character]?
     var info: Info?
 }
 
-struct Info: Decodable {
-    var next: String?
-}
-
-struct Character: Decodable {
+public struct Character: Decodable {
     var name: String?
     var image: String?
 }
+
+public struct Info: Decodable {
+    var next: String?
+}
+
+
